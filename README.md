@@ -1,6 +1,6 @@
 # Cloud Security Baseline (AWS + Terraform)
 
-**Status:** 🚧 In Progress
+**Status:** In Progress
 
 A Terraform-based security baseline for AWS accounts, implementing centralized logging, threat detection, least-privilege IAM, and network visibility as reusable, version-controlled infrastructure.
 
