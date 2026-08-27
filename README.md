@@ -34,7 +34,7 @@ Most AWS environments start without basic security guardrails in place. This pro
 
 ## Roadmap
 
-- [ ] CloudTrail + S3 logging bucket
+- [x] CloudTrail + S3 logging bucket
 - [ ] IAM baseline roles/policies
 - [ ] GuardDuty enablement
 - [ ] VPC Flow Logs
