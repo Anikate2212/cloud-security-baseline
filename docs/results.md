@@ -30,7 +30,7 @@ Prowler counts one result per resource, so the total grew from 59 to 84 as the b
 | `securityhub_enabled`, `macie_is_enabled` | 2 | Paid services, deliberately out of scope. Prowler covers the benchmark for free here. |
 | `cloudtrail_s3_dataevents_read_enabled` / `_write_enabled` | 2 | S3 object-level data events are billed per event. GuardDuty S3 Protection already watches S3 data access for threats. |
 | `cloudwatch_log_metric_filter_aws_organizations_changes` | 1 | The filter exists and alarms, but its pattern doesn't match the exact form Prowler's v7.0 check expects. No AWS Organization exists in this account, so it has no events to catch either way. |
-| `iam_user_accesskey_unused` | 1 | Under review: an access key on the Terraform user that hasn't been used recently. |
+| `iam_user_accesskey_unused` | 1 | Resolved after the scan: the Terraform user's 89-day-old key was rotated (create new, deactivate old, verify, delete). |
 | `iam_check_saml_providers_sts` | 1 | No identity-provider federation in a single-user account. |
 | `apigateway_restapi_logging_enabled`, `s3_bucket_secure_transport_policy` (+1 MFA Delete) | 2 | Resources from a separate, older project in the same account, outside this baseline's scope. Its bucket is now protected by the account-level S3 Block Public Access this baseline enabled. |
 
