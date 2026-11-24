@@ -139,4 +139,6 @@ The budget alert emails at 80% of $10 actual and at 100% forecast.
 | `detector already exists` | GuardDuty was enabled manually before | `terraform import module.guardduty.aws_guardduty_detector.main <id>` (id from `aws guardduty list-detectors`) |
 | `MaxNumberOfConfigurationRecordersExceeded` | A Config recorder already exists in the region | Delete it (`aws configservice describe-configuration-recorders`, then `delete-configuration-recorder`) or import it |
 | `no matching EC2 VPC found` | Default VPC was deleted | Set `enable_default_vpc_flow_logs = false` in `terraform.tfvars` |
+| First sample finding never alerts | Detector only a few minutes old isn't publishing to EventBridge yet | Wait ~5 minutes after apply, then generate a new sample finding |
+| `bash: !DNS: event not found` | `!` in a double-quoted finding type triggers bash history expansion | Use single quotes around `--finding-types` |
 | `InsufficientEncryptionPolicyException` on CloudTrail | Key policy not yet propagated | Re-run `terraform apply` after a minute |

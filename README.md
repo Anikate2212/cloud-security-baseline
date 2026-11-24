@@ -10,9 +10,9 @@ A Terraform baseline that takes a fresh AWS account to a hardened, monitored sta
 
 | Metric | Value |
 |---|---|
-| CIS benchmark pass rate (Prowler, us-east-1) | **X% → Y%** |
-| GuardDuty finding to email alert | **~X minutes**, tested with sample findings |
-| CIS real-time alarms | **15** (root use, IAM changes, disabled logging, network changes, failed logins...) |
+| CIS AWS Foundations v7.0 pass rate (Prowler, us-east-1) | **35.6% → 81.0%** (failures 38 → 16) |
+| GuardDuty finding to alert | **5 seconds** measured in Lambda, email in **under 1 minute** |
+| CIS real-time alarms | **15**; 8 fired on real activity during deployment, including my own root sign-in |
 | Static security scan (Checkov) | **0 failed**, 23 suppressions, each justified inline |
 
 ## Architecture

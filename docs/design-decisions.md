@@ -57,6 +57,9 @@ Anything launched without an explicit security group fails closed instead of ope
 **Flow logs on the default VPC too.**
 It's where resources land when nobody picks a VPC, so it's the one most likely to hold something unexpected.
 
+**Account-level S3 Block Public Access even though an older project bucket served a public site.**
+A single exception would have weakened the whole baseline. The bucket and its data are untouched; only public reads stopped. The right way to bring that site back is CloudFront with Origin Access Control, which keeps the bucket private.
+
 ## Accepted gaps (out of scope, deliberately)
 
 | Gap | Why not here |
