@@ -42,3 +42,15 @@ terraform.rc
 # Optional: ignore plan files saved before destroying Terraform configuration
 # Uncomment the line below if you want to ignore planout files.
 # planout
+# ---- project additions ----
+# Lambda build artifacts (rebuilt from source on every plan)
+terraform/modules/alerting/build/
+
+# Prowler output: contains the account ID and a map of every weakness.
+# Only the summary score is published (see docs/results.md).
+output/
+prowler-output/
+*.ocsf.json
+__pycache__/
+tfplan
+*.tfplan

@@ -1,0 +1,70 @@
+# Every push and pull request runs three gates. Any failure fails the build.
+#   1. terraform fmt      - consistent formatting (style drift hides real diffs)
+#   2. terraform validate - the code is syntactically and type-correct
+#   3. checkov            - static security scan of the infrastructure code.
+#      Every suppressed check has an inline #checkov:skip with a written reason,
+#      so the scan passes only when each finding is fixed or justified.
+# Checkov results are also uploaded as SARIF to the repo's Security tab.
+#
+# This workflow never touches AWS: no credentials are stored in GitHub.
+
+name: terraform-security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: fmt + validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "^1.10.0" # latest 1.x; S3 native locking needs 1.10+
+
+      - name: terraform fmt
+        run: terraform fmt -check -recursive -diff terraform
+
+      - name: validate main stack
+        working-directory: terraform
+        run: |
+          terraform init -backend=false -input=false
+          terraform validate
+
+      - name: validate bootstrap
+        working-directory: terraform/bootstrap
+        run: |
+          terraform init -backend=false -input=false
+          terraform validate
+
+  checkov:
+    name: checkov security scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write # upload SARIF to the Security tab
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run checkov
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: terraform
+          framework: terraform
+          output_format: cli,sarif
+          output_file_path: console,results.sarif
+          soft_fail: false
+
+      - name: Upload SARIF
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results.sarif
+          category: checkov
