@@ -82,4 +82,4 @@ terraform plan -out=tfplan && terraform apply tfplan
 
 - AWS Organizations with a Service Control Policy denying `cloudtrail:StopLogging` and `guardduty:DeleteDetector`, a guardrail no IAM admin can bypass
 - Replace the Terraform user's access keys with GitHub Actions OIDC and run `plan` in CI
-- Automated containment: a Lambda that disables a compromised access key on a high-severity credential finding (this feeds my Incident Response Simulation project)
+- Automated containment: built in [aws-detection-as-code](https://github.com/Anikate2212/aws-detection-as-code), which disables a backdoor access key and locks down an externally shared bucket within seconds.
