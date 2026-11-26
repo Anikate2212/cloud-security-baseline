@@ -72,7 +72,9 @@ Step-by-step, including the alerting tests and teardown: [docs/deployment.md](do
 
 ```bash
 cd terraform/bootstrap && terraform init && terraform apply
-cd .. && terraform init -backend-config="bucket=$(terraform -chdir=bootstrap output -raw state_bucket)"
+cd ..
+terraform init \
+  -backend-config="bucket=$(terraform -chdir=bootstrap output -raw state_bucket)"
 terraform plan -out=tfplan && terraform apply tfplan
 ```
 
